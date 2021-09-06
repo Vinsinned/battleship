@@ -9,16 +9,12 @@ const ship = (length) => {
     };
     const hit = (area) => {
         let index = array.indexOf(area);
-        if (index == -1) {
-            console.log('doesn\'t exist')
-        } else {
+        if (index != -1) {
             array.splice(index, 1);
-            console.log('hit')
         }
         return array;
     }
     const isSunk = () => {
-        console.log(array);
         if (array.length == 0) {
             return 'sunk';
         } else {

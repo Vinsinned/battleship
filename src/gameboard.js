@@ -3,6 +3,7 @@ const gameboard = () => {
     let newShip = ship(3);
     let length = newShip.shipLength();
     let shipCoordinates = [];
+    let usedCoordinates = [];
     let missedAttacks = [];
     const placeShip = (coordinates) => {
         let i;
@@ -19,7 +20,8 @@ const gameboard = () => {
             let indexOfCoordinate = shipCoordinates.indexOf(coordinate);
             if (indexOfArray === indexOfCoordinate) {
                 booleanHit = true;
-                newShip.hit(indexOfArray)
+                newShip.hit(indexOfArray);
+                usedCoordinates.push(coordinate);
                 break;
             } else {
                 booleanHit = false;
@@ -27,6 +29,7 @@ const gameboard = () => {
         }
         if (booleanHit === false) {
             missedAttacks.push(coordinate);
+            usedCoordinates.push(coordinate);
             return false;
         }
         return booleanHit;
@@ -77,7 +80,7 @@ const gameboard = () => {
         }
         return 'alive';
     }
-    return {placeShip, receiveAttack, receiveAttackTest, checkShip, checkShipTest, missedAttacks}
+    return {placeShip, receiveAttack, receiveAttackTest, checkShip, checkShipTest, missedAttacks, usedCoordinates}
 }
 
 module.exports = gameboard;
