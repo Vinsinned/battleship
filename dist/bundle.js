@@ -108,6 +108,16 @@ eval("\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, style) {\
 
 /***/ }),
 
+/***/ "./src/gameboard.js":
+/*!**************************!*\
+  !*** ./src/gameboard.js ***!
+  \**************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("const ship = __webpack_require__(/*! ./ship.js */ \"./src/ship.js\")\nconst gameboard = () => {\n    let newShip = ship(3);\n    let length = newShip.shipLength();\n    let shipCoordinates = [];\n    let missedAttacks = [];\n    const placeship = (coordinates) => {\n        let i;\n        for (i = 0; i < length; i++) {\n            shipCoordinates.push(coordinates[i]);\n        }\n        console.log(shipCoordinates)\n    }\n    const receiveAttack = (coordinate) => {\n        let i;\n        let booleanHit = null;\n        for (i = 0; i < length; i++) {\n            let indexOfArray = newShip.array.indexOf(newShip.array[i]);\n            let indexOfCoordinate = shipCoordinates.indexOf(coordinate);\n            if (indexOfArray === indexOfCoordinate) {\n                booleanHit = true;\n                newShip.hit(indexOfArray)\n                break;\n            } else {\n                booleanHit = false;\n            }\n        }\n        if (booleanHit === false) {\n            missedAttacks.push(coordinate);\n            console.log('miss');\n        }\n    }\n    const checkShip = () => {\n        let i;\n        let lives = 0;\n        for (i = 0; i < length; i++) {\n            if (newShip.array[i]) {\n                lives += 1;\n            }\n        }\n        console.log(lives);\n        if (lives === 0) {\n            console.log('Uh oh... Ship\\'s dead')\n        }\n    }\n    return {placeship, receiveAttack, checkShip, missedAttacks}\n}\nlet gameboardFunction = gameboard();\ngameboardFunction.placeship(['1e', '2e', '3e']);\ngameboardFunction.receiveAttack('3e');\ngameboardFunction.receiveAttack('2e');\ngameboardFunction.receiveAttack('1e');\ngameboardFunction.checkShip();\n\n//# sourceURL=webpack://battleship/./src/gameboard.js?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
@@ -115,7 +125,7 @@ eval("\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, style) {\
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ \"./src/style.css\");\n/* harmony import */ var _ship_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ship.js */ \"./src/ship.js\");\n/* harmony import */ var _ship_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_ship_js__WEBPACK_IMPORTED_MODULE_1__);\n\n\n\n//# sourceURL=webpack://battleship/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ \"./src/style.css\");\n/* harmony import */ var _ship_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ship.js */ \"./src/ship.js\");\n/* harmony import */ var _ship_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_ship_js__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _gameboard_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./gameboard.js */ \"./src/gameboard.js\");\n/* harmony import */ var _gameboard_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_gameboard_js__WEBPACK_IMPORTED_MODULE_2__);\n\n\n\n\n//# sourceURL=webpack://battleship/./src/index.js?");
 
 /***/ }),
 
@@ -125,7 +135,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _sty
   \*********************/
 /***/ ((module) => {
 
-eval("const ship = (length) => {\n    let array = [];\n    let i;\n    for (i = 0; i <= length; i++) {\n        array.push(i);\n    }\n    const shipLength = () => {\n        return length;\n    };\n    const hit = (area) => {\n        let index = array.indexOf(area);\n        if (index == -1) {\n            console.log('doesn\\'t exist')\n        } else {\n            array.splice(index, 1);\n        }\n        return array;\n    }\n    const isSunk = () => {\n        console.log(array);\n        if (array.length == 0) {\n            return 'sunk';\n        } else {\n            return 'not yet';\n        }\n    }\n    return {shipLength, hit, isSunk}\n}\nlet fakeShip = ship(2);\n\nfakeShip.hit(2);\nfakeShip.hit(0);\nfakeShip.hit(1);\nfakeShip.isSunk();\n\nmodule.exports = ship;\n\n//# sourceURL=webpack://battleship/./src/ship.js?");
+eval("const ship = (length) => {\n    let array = [];\n    let i;\n    for (i = 0; i < length; i++) {\n        array.push(i);\n    }\n    const shipLength = () => {\n        return length;\n    };\n    const hit = (area) => {\n        let index = array.indexOf(area);\n        if (index == -1) {\n            console.log('doesn\\'t exist')\n        } else {\n            array.splice(index, 1);\n            console.log('hit')\n        }\n        return array;\n    }\n    const isSunk = () => {\n        console.log(array);\n        if (array.length == 0) {\n            return 'sunk';\n        } else {\n            return 'not yet';\n        }\n    }\n    return {shipLength, hit, isSunk, array}\n}\n\nmodule.exports = ship;\n\n//# sourceURL=webpack://battleship/./src/ship.js?");
 
 /***/ })
 
