@@ -4,12 +4,12 @@ const gameboard = () => {
     let length = newShip.shipLength();
     let shipCoordinates = [];
     let missedAttacks = [];
-    const placeship = (coordinates) => {
+    const placeShip = (coordinates) => {
         let i;
         for (i = 0; i < length; i++) {
             shipCoordinates.push(coordinates[i]);
         }
-        console.log(shipCoordinates)
+        return shipCoordinates;
     }
     const receiveAttack = (coordinate) => {
         let i;
@@ -27,8 +27,29 @@ const gameboard = () => {
         }
         if (booleanHit === false) {
             missedAttacks.push(coordinate);
-            console.log('miss');
+            return false;
         }
+        return booleanHit;
+    }
+    const receiveAttackTest = (coordinate, arrayForTests) => {
+        let i;
+        let booleanHit = null;
+        for (i = 0; i < length; i++) {
+            let indexOfArray = arrayForTests.indexOf(arrayForTests[i]);
+            let indexOfCoordinate = shipCoordinates.indexOf(coordinate);
+            if (indexOfArray === indexOfCoordinate) {
+                booleanHit = true;
+                newShip.hit(indexOfArray)
+                break;
+            } else {
+                booleanHit = false;
+            }
+        }
+        if (booleanHit === false) {
+            missedAttacks.push(coordinate);
+            return false;
+        }
+        return booleanHit;
     }
     const checkShip = () => {
         let i;
@@ -38,16 +59,25 @@ const gameboard = () => {
                 lives += 1;
             }
         }
-        console.log(lives);
         if (lives === 0) {
-            console.log('Uh oh... Ship\'s dead')
+            return 'dead';
         }
+        return 'alive';
     }
-    return {placeship, receiveAttack, checkShip, missedAttacks}
+    const checkShipTest = (testArray) => {
+        let i;
+        let lives = 0;
+        for (i = 0; i < length; i++) {
+            if (testArray[i]) {
+                lives += 1;
+            }
+        }
+        if (lives === 0) {
+            return 'dead';
+        }
+        return 'alive';
+    }
+    return {placeShip, receiveAttack, receiveAttackTest, checkShip, checkShipTest, missedAttacks}
 }
-let gameboardFunction = gameboard();
-gameboardFunction.placeship(['1e', '2e', '3e']);
-gameboardFunction.receiveAttack('3e');
-gameboardFunction.receiveAttack('2e');
-gameboardFunction.receiveAttack('1e');
-gameboardFunction.checkShip();
+
+module.exports = gameboard;
