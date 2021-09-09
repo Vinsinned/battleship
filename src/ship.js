@@ -1,8 +1,8 @@
 const ship = (length) => {
     let array = [];
     let i;
-    for (i = 0; i < length; i++) {
-        array.push(i);
+    for (i = 0; i < length.length; i++) {
+        array.push(length[i]);
     }
     const shipLength = () => {
         return length;
@@ -16,6 +16,7 @@ const ship = (length) => {
     }
     const isSunk = () => {
         if (array.length == 0) {
+            console.log('sunk')
             return 'sunk';
         } else {
             return 'not yet';

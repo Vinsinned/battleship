@@ -1,9 +1,5 @@
 const ship = require('./ship.js');
-const gameboard = require('./gameboard.js')
-let testShip = ship(3);
-let gameboardFunction = gameboard();
-gameboardFunction.placeShip(['1e', '2e', '3e']);
-gameboardFunction.checkShip();
+const gameboard = require('./gameboard.js');
 
 const player = () => {
     const attack = (coordinate) => {
@@ -14,10 +10,10 @@ const player = () => {
         return 'done';
     }
     const randomPlay = () => {
-        let alphabet = 'abcdefg';
+        let alphabet = 'abcdefghij';
         let randomAlphabet = Math.floor(Math.random() * 7);
-        let randomNumber = Math.floor(Math.random() * 6) + 1;
-        let randomCoordinate = alphabet[randomAlphabet] + randomNumber;
+        let randomNumber = Math.floor(Math.random() * 6) + 10;
+        let randomCoordinate = randomNumber + alphabet[randomAlphabet];
         return 'No errors';
     }
     return {attack, randomPlay}
