@@ -19,6 +19,7 @@ const ship = (length) => {
             console.log('sunk')
             return 'sunk';
         } else {
+            console.log('not sunk')
             return 'not yet';
         }
     }

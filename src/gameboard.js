@@ -1,7 +1,14 @@
 const { indexOf } = require('lodash');
 const { doc } = require('prettier');
 const ship = require('./ship.js')
-const gameboard = () => {
+const gameboard = (board) => {
+    let idIdentifier;
+    if (board === 1) {
+        idIdentifier = 'one';
+    } else {
+        idIdentifier = 'two';
+    }
+    console.log('created')
     let ships = [];
     let usedCoordinates = [];
     let missedAttacks = [];
@@ -17,6 +24,7 @@ const gameboard = () => {
         }
         ships.push(shipCoordinates);
         const hit = (coordinate) => {
+            console.log('hit')
             newShip.hit(coordinate);
             newShip.isSunk();
         }
@@ -26,6 +34,7 @@ const gameboard = () => {
         if (usedCoordinates.includes(coordinate)) {
             console.log('already hit')
         } else {
+            console.log('recieve attack')
             let i;
             let booleanHit = null;
             let shipsCount = ships.length;
@@ -34,18 +43,22 @@ const gameboard = () => {
             for (i = 0; i < shipsCount; i++) {
                 let ship = ships[i];
                 let indexOfArray = ship.indexOf(coordinate);
+                console.log(ship);
+                console.log(coordinate)
                 let indexOfCoordinate = ship.indexOf(coordinate);
                 if (indexOfArray === indexOfCoordinate && indexOfArray != -1 && done != true) {
                     booleanHit = true;
                     //selectShip.hit(indexOfArray);
-                    console.log(i + 1)
+                    console.log(i + 1);
                     switch (i + 1) {
                         case 1:
                             selectShip = 'ship1';
+                            console.log('ship1')
                             done = true;
                             break;
                         case 2:
                             selectShip = 'ship2';
+                            console.log('ship2')
                             done = true;
                             break;
                         case 3:
@@ -62,6 +75,7 @@ const gameboard = () => {
                             break;
                         case 6:
                             selectShip = 'ship6';
+                            console.log('ship6')
                             done = true;
                             break;
                         case 7:
@@ -72,6 +86,7 @@ const gameboard = () => {
                 }
             }
             if (booleanHit === false) {
+                console.log('WHAT')
                 missedAttacks.push(coordinate);
             }
             usedCoordinates.push(coordinate);
@@ -101,6 +116,7 @@ const gameboard = () => {
         return booleanHit;
     }
     const checkShip = () => {
+        console.log('checking')
         let i;
         let lives = 0;
         for (i = 0; i < length; i++) {
