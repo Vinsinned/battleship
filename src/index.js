@@ -4,6 +4,7 @@ const gameboard = require('./gameboard.js')
 const player = require('./players.js')
 import { doc } from 'prettier';
 
+let lose = null;
 const body = document.querySelector('#gridContainer');
 const rows = 'abcdefghij';
 const attack1 = document.querySelector('#submit1');
@@ -18,46 +19,8 @@ let currentLetter2 = 'a';
 let currentLetterIndex2 = 0;
 let currentNumber2 = 1;
 let currentCoordinate2 = null;
-let currentSelected2 = null
+let currentSelected2 = null;
 
-const createGrid = (id) => {
-    let allDivs;
-    let container;
-    let idIdentifier;
-    if (id == 1) {
-        container = document.querySelector('#gridContainer1');
-        allDivs = document.querySelector('#gridContainer1');
-        idIdentifier = 'one';
-    } else {
-        container = document.querySelector('#gridContainer2');
-        allDivs = document.querySelector('#gridContainer2');
-        idIdentifier = 'two';
-    }
-    let i;
-    for (i = 0; i < 100; i++) {
-        let div = document.createElement('div');
-        div.id = currentLetter + currentNumber + idIdentifier;
-        console.log(div.id)
-        div.classList.add('tiles');
-        currentNumber += 1;
-        if (currentNumber > 10) {
-            currentLetterIndex += 1;
-            currentLetter = rows[currentLetterIndex];
-            currentNumber = 1;
-        }
-        allDivs.style.cssText = 'display: grid; grid-template-rows: repeat(${limit}, 1fr); grid-template-columns: repeat(10, 1fr);';
-        container.appendChild(div);
-        div.addEventListener('click', () => {
-            if (currentSelected != null) {
-                currentSelected.style.cssText = '';
-            }
-            currentCoordinate = div.id;
-            currentSelected = document.querySelector(`#${div.id}`);
-            console.log(currentSelected.id)
-            currentSelected.style.cssText = 'transform: scale(1.1);'
-        })
-    }
-}
 const createGridOne = () => {
     let allDivs = document.querySelector('#gridContainer1');
     let container = document.querySelector('#gridContainer1');
@@ -75,15 +38,16 @@ const createGridOne = () => {
         allDivs.style.cssText = 'display: grid; grid-template-rows: repeat(${limit}, 1fr); grid-template-columns: repeat(10, 1fr);';
         container.appendChild(div);
         div.addEventListener('click', () => {
-            if (currentSelected1 != null) {
-                currentSelected1.style.cssText = '';
-            }
-            currentCoordinate1 = div.id;
-            currentSelected1 = document.querySelector(`#${div.id}`);
-            currentSelected1.style.cssText = 'transform: scale(1.1);'
+        if (currentSelected1 != null) {
+            currentSelected1.style.cssText = '';
+        }
+        currentCoordinate1 = div.id;
+        currentSelected1 = document.querySelector(`#${div.id}`);
+        currentSelected1.style.cssText = 'transform: scale(1.1);';
         })
     }
 }
+
 const createGridTwo = () => {
     let allDivs = document.querySelector('#gridContainer2');
     let container = document.querySelector('#gridContainer2');
@@ -129,25 +93,25 @@ const newGame = () => {
             let findShip = firstGameboard.receiveAttack(coordinate);
             switch (findShip) {
                 case 'ship1':
-                    ship1.hit(coordinate);
+                    ship1.hit(coordinate, 0);
                     break;
                 case 'ship2':
-                    ship2.hit(coordinate);
+                    ship2.hit(coordinate, 1);
                     break;
                 case 'ship3':
-                    ship3.hit(coordinate);
+                    ship3.hit(coordinate, 2);
                     break;
                 case 'ship4':
-                    ship4.hit(coordinate);
+                    ship4.hit(coordinate, 3);
                     break;
                 case 'ship5':
-                    ship5.hit(coordinate);
+                    ship5.hit(coordinate, 4);
                     break;
                 case 'ship6':
-                    ship6.hit(coordinate);
+                    ship6.hit(coordinate, 5);
                     break;
                 case 'ship7':
-                    ship7.hit(coordinate);
+                    ship7.hit(coordinate, 6);
                     break;
             }
         }
@@ -164,7 +128,6 @@ const newGame = () => {
         if (currentCoordinate2 != null) {
             let coordinate = currentCoordinate2;
             let findShip = secondGameboard.receiveAttack(coordinate);
-            console.log(findShip);
             switch (findShip) {
                 case 'ship1':
                     ship1two.hit(coordinate);

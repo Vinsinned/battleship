@@ -1,5 +1,6 @@
 body {
     text-align: center;
+    background-color: #253E66;
 }
 div {
     height: 100%;
@@ -8,19 +9,23 @@ div {
     margin: none;
 }
 .shipArea {
-    background-color: blue;
+    background-color: #EF6555;
 }
+/*Hit*/
 .selected {
     background-color: red;
 }
+.miss {
+    background-color: #E3DFD7;
+}
 .tiles {
-    border: 1px solid black;
+    border: 1px solid #C29D4E;
 }
 .gridContainer {
     width: 300px;
     height: 300px;
     margin: auto;
-    border: 1px solid black;
+    border: 1px solid #C29D4E;
 }
 #buttons {
     display: flex;
@@ -31,8 +36,23 @@ div {
     height: 300px;
     margin: auto;
 }
-#submit {
+#submit1 {
     margin-top: 20px;
+    font-size: 20px;
+    width: 130px;
+    height: 30px;
+    border: none;
+    border-radius: 20px;
+    background-color: #C29D4E;
+}
+#submit2 {
+    margin-top: 20px;
+    font-size: 20px;
+    width: 130px;
+    height: 30px;
+    border: none;
+    border-radius: 20px;
+    background-color: #C29D4E;
 }
 #gameboards {
     display: flex;

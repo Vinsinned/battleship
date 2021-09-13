@@ -12,14 +12,11 @@ const ship = (length) => {
         if (index != -1) {
             array.splice(index, 1);
         }
-        return array;
     }
     const isSunk = () => {
         if (array.length == 0) {
-            console.log('sunk')
             return 'sunk';
         } else {
-            console.log('not sunk')
             return 'not yet';
         }
     }
