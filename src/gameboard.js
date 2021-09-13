@@ -3,10 +3,16 @@ const { doc } = require('prettier');
 const ship = require('./ship.js')
 const gameboard = (board, lose) => {
     let idIdentifier;
+    let playerIdentifier;
     if (board === 1) {
         idIdentifier = 'one';
     } else {
         idIdentifier = 'two';
+    }
+    if (board === 2) {
+        playerIdentifier = 1;
+    } else {
+        playerIdentifier = 2;
     }
     let ships = [];
     let usedCoordinates = [];
@@ -22,6 +28,7 @@ const gameboard = (board, lose) => {
         ships.push(newShip.array);
         const hit = (coordinate) => {
             newShip.hit(coordinate);
+            newShip.isSunk(message);
             let i;
             let emptyShips = 0;
             for (i = 0; i < ships.length; i++) {
@@ -34,15 +41,15 @@ const gameboard = (board, lose) => {
                 let i;
                 for (i = 0; i < 7; i++) {
                     ships.splice(0, 1);
-                    console.log(ships);
                 }
             }
         }
         return {hit}
     }
-    const receiveAttack = (coordinate) => {
+    const receiveAttack = (coordinate, message) => {
         if (usedCoordinates.includes(coordinate)) {
-            console.log('already hit')
+            //useless
+            message.textContent = 'Already attacked, try again';
         } else {
             let i;
             let booleanHit = null;
@@ -54,10 +61,10 @@ const gameboard = (board, lose) => {
                 let ship = ships[i];
                 let indexOfArray = ship.indexOf(coordinate);
                 if (indexOfArray != -1 && done != true) {
+                    message.textContent = `Player ${playerIdentifier} hit`;
                     tile.classList.add('selected')
                     booleanHit = true;
                     done = true;
-                    //selectShip.hit(indexOfArray);
                     switch (i + 1) {
                         case 1:
                             selectShip = 'ship1';
@@ -89,6 +96,7 @@ const gameboard = (board, lose) => {
                             break;
                     }
                 } else {
+                    message.textContent = `Player ${playerIdentifier} miss`;
                     booleanHit = false;
                 }
                 if (done == true) {

@@ -1,12 +1,17 @@
 body {
     text-align: center;
     background-color: #253E66;
+    text-align: center;
 }
 div {
     height: 100%;
     width: 100%;
     display: inline-block;
     margin: none;
+}
+button:Hover {
+    transform: scale(1.01);
+    transition: 0.3s;
 }
 .shipArea {
     background-color: #EF6555;
@@ -20,6 +25,14 @@ div {
 }
 .tiles {
     border: 1px solid #C29D4E;
+}
+.scale {
+    transition: 1s;
+    transform: scale(1.1);
+}
+.normal {
+    transition: 1s;
+    transform: scale(1);
 }
 .gridContainer {
     width: 300px;
@@ -56,4 +69,12 @@ div {
 }
 #gameboards {
     display: flex;
+}
+#message {
+    font-size: 30px;
+    width: 500px;
+    background-color: #EF6555;
+    margin: auto;
+    margin-bottom: 30px;
+    border-radius: 30px;
 }

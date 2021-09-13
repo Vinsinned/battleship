@@ -4,6 +4,8 @@ const gameboard = require('./gameboard.js')
 const player = require('./players.js')
 import { doc } from 'prettier';
 
+let message = document.querySelector('#message');
+let currentTurn = 2;
 let lose = null;
 const body = document.querySelector('#gridContainer');
 const rows = 'abcdefghij';
@@ -20,6 +22,10 @@ let currentLetterIndex2 = 0;
 let currentNumber2 = 1;
 let currentCoordinate2 = null;
 let currentSelected2 = null;
+
+let grid1 = document.querySelector('#gridContainer1');
+let grid2 = document.querySelector('#gridContainer2');
+grid2.classList.add('scale');
 
 const createGridOne = () => {
     let allDivs = document.querySelector('#gridContainer1');
@@ -88,31 +94,54 @@ const newGame = () => {
     const ship6 = firstGameboard.placeShip(['g9one', 'h9one']);
     const ship7 = firstGameboard.placeShip(['d6one', 'd7one', 'd8one']);
     attack1.addEventListener('click', () => {
-        if (currentCoordinate1 != null) {
-            let coordinate = currentCoordinate1;
-            let findShip = firstGameboard.receiveAttack(coordinate);
-            switch (findShip) {
-                case 'ship1':
-                    ship1.hit(coordinate, 0);
-                    break;
-                case 'ship2':
-                    ship2.hit(coordinate, 1);
-                    break;
-                case 'ship3':
-                    ship3.hit(coordinate, 2);
-                    break;
-                case 'ship4':
-                    ship4.hit(coordinate, 3);
-                    break;
-                case 'ship5':
-                    ship5.hit(coordinate, 4);
-                    break;
-                case 'ship6':
-                    ship6.hit(coordinate, 5);
-                    break;
-                case 'ship7':
-                    ship7.hit(coordinate, 6);
-                    break;
+        if (currentTurn == 1) {
+            if (grid1.classList.contains('scale')) {
+                console.log('scaled')
+                grid1.classList.remove('scale');
+                grid1.classList.add('normal');
+                grid2.classList.add('scale');
+                grid2.classList.remove('normal');
+            }
+            if (currentCoordinate1 != null && firstGameboard.usedCoordinates.includes(currentCoordinate1) == false) {
+                let coordinate = currentCoordinate1;
+                let findShip = firstGameboard.receiveAttack(coordinate, message);
+                switch (findShip) {
+                    case 'ship1':
+                        ship1.hit(coordinate);
+                        currentTurn = 2;
+                        break;
+                    case 'ship2':
+                        ship2.hit(coordinate);
+                        currentTurn = 2;
+                        break;
+                    case 'ship3':
+                        ship3.hit(coordinate);
+                        currentTurn = 2;
+                        break;
+                    case 'ship4':
+                        ship4.hit(coordinate);
+                        currentTurn = 2;
+                        break;
+                    case 'ship5':
+                        ship5.hit(coordinate);
+                        currentTurn = 2;
+                        break;
+                    case 'ship6':
+                        ship6.hit(coordinate);
+                        currentTurn = 2;
+                        break;
+                    case 'ship7':
+                        ship7.hit(coordinate);
+                        currentTurn = 2;
+                        break;
+                }
+                currentTurn = 2;
+                if (firstGameboard.ships.length == 0) {
+                    message.textContent = 'Player 1 loses';
+                    currentTurn = null;
+                }
+            } else if (firstGameboard.usedCoordinates.includes(currentCoordinate1)) {
+                message.textContent = "Already attacked"
             }
         }
     });
@@ -123,35 +152,63 @@ const newGame = () => {
     const ship4two = secondGameboard.placeShip(['g6two']);
     const ship5two = secondGameboard.placeShip(['i3two']);
     const ship6two = secondGameboard.placeShip(['g9two', 'h9two']);
-    const ship7two  = secondGameboard.placeShip(['d6two', 'd7two', 'd8two']);
+    const ship7two = secondGameboard.placeShip(['d6two', 'd7two', 'd8two']);
     attack2.addEventListener('click', () => {
-        if (currentCoordinate2 != null) {
-            let coordinate = currentCoordinate2;
-            let findShip = secondGameboard.receiveAttack(coordinate);
-            switch (findShip) {
-                case 'ship1':
-                    ship1two.hit(coordinate);
-                    break;
-                case 'ship2':
-                    ship2two.hit(coordinate);
-                    break;
-                case 'ship3':
-                    ship3two.hit(coordinate);
-                    break;
-                case 'ship4':
-                    ship4two.hit(coordinate);
-                    break;
-                case 'ship5':
-                    ship5two.hit(coordinate);
-                    break;
-                case 'ship6':
-                    ship6two.hit(coordinate);
-                    break;
-                case 'ship7':
-                    ship7two.hit(coordinate);
-                    break;
+        if (currentTurn == 2) {
+            if (grid2.classList.contains('scale')) {
+                grid2.classList.remove('scale');
+                grid2.classList.add('normal');
+                grid1.classList.add('scale');
+                if (grid1.classList.contains('normal')) {
+                    grid1.classList.remove('normal');
+                }
+            }
+            if (currentCoordinate2 != null && secondGameboard.usedCoordinates.includes(currentCoordinate1) == false) {
+                let coordinate = currentCoordinate2;
+                let findShip = secondGameboard.receiveAttack(coordinate, message);
+                switch (findShip) {
+                    case 'ship1':
+                        ship1two.hit(coordinate);
+                        currentTurn = 1;
+                        break;
+                    case 'ship2':
+                        ship2two.hit(coordinate);
+                        currentTurn = 1;
+                        break;
+                    case 'ship3':
+                        ship3two.hit(coordinate);
+                        currentTurn = 1;
+                        break;
+                    case 'ship4':
+                        ship4two.hit(coordinate);
+                        currentTurn = 1;
+                        break;
+                    case 'ship5':
+                        ship5two.hit(coordinate);
+                        currentTurn = 1;
+                        break;
+                    case 'ship6':
+                        ship6two.hit(coordinate);
+                        currentTurn = 1;
+                        break;
+                    case 'ship7':
+                        ship7two.hit(coordinate);
+                        currentTurn = 1;
+                        break;
+                }
+                currentTurn = 1;
+                if (secondGameboard.ships.length == 0) {
+                    message.textContent = 'Player 2 loses';
+                    currentTurn = null;
+                }
+            } else if (secondGameboard.usedCoordinates.includes(currentCoordinate1)) {
+                message.textContent = "Already attacked"
             }
         }
     });
+    const finishGame = () => {
+        console.log('what lol')
+    }
+    return {finishGame}
 }
-newGame();
+let startGame = newGame();

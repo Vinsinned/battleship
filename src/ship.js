@@ -13,8 +13,9 @@ const ship = (length) => {
             array.splice(index, 1);
         }
     }
-    const isSunk = () => {
+    const isSunk = (message) => {
         if (array.length == 0) {
+            message.textContent = 'Ship has been sunk'
             return 'sunk';
         } else {
             return 'not yet';
