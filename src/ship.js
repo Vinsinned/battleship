@@ -15,7 +15,7 @@ const ship = (length) => {
     }
     const isSunk = (message) => {
         if (array.length == 0) {
-            message.textContent = 'Ship has been sunk'
+            message.textContent = 'Ship has been sunk';
             return 'sunk';
         } else {
             return 'not yet';
