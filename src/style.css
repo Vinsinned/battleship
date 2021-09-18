@@ -40,6 +40,11 @@ button:Hover {
     margin: auto;
     border: 1px solid #C29D4E;
 }
+.block {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #C29D4E;
+}
 #buttons {
     display: flex;
     justify-content: space-around;
@@ -68,8 +73,13 @@ button:Hover {
     background-color: #C29D4E;
     margin-bottom: 20px;
 }
-#gameboards {
+#blockHolder {
+    margin-top: 60px;
+    width: 700px;
+    height: 300px;
     display: flex;
+    margin: auto;
+    justify-content: space-between;
 }
 .message {
     font-size: 30px;
@@ -85,5 +95,11 @@ button:Hover {
     font-size: 50px;
     border-radius: 20px;
     border: none;
-    background-color: #EF6555;
+    margin-bottom: 30px;
+}
+.a1 {
+    width: 50px;
+    height: 50px;
+    border: 1px solid violet;
+    background-color: #E3DFD7;
 }

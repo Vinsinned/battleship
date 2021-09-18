@@ -27,6 +27,82 @@ let currentSelected2 = null;
 let grid1 = document.querySelector('#gridContainer1');
 let grid2 = document.querySelector('#gridContainer2');
 
+let makeShips = [1, 1, 2, 3, 4, 5, 3];
+let blockHolder = document.querySelector('#blockHolder');
+let currentBlockDiv = 1;
+
+for (const ships of makeShips) {
+    let blockDiv = document.createElement('div');
+    blockDiv.id = 'blockDiv';
+    blockDiv.classList.add('a1')
+    blockDiv.style.cssText = `position: absolute;
+    width: 30px; height: 30px;`
+    let i;
+    for (i = 0; i < ships; i++) {
+        let block = document.createElement('div');
+        block.id = 'blockDivHeader';
+        block.classList.add('block');
+        blockDiv.appendChild(block);
+    }
+    let append = document.querySelector(`#block${currentBlockDiv}`);
+    append.appendChild(blockDiv)
+    currentBlockDiv++;
+    dragElement(blockDiv)
+}
+
+/*
+let testShip = document.createElement('div');
+testShip.id = 'testShip';
+testShip.style.cssText = ` position: absolute;
+background-color: #f1f1f1; width: 30px; height: 30px;`
+document.body.appendChild(testShip);
+let block = document.createElement('div');
+block.id = 'testShipHeader';
+block.classList.add('block');
+testShip.appendChild(block);
+*/
+
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById(elmnt.id + "header")) {
+    // if present, the header is where you move the DIV from:
+    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+  } else {
+    // otherwise, move the DIV from anywhere inside the DIV:
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+    e = e;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    // stop moving when mouse button is released:
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+
 const createGridOne = () => {
     let allDivs = document.querySelector('#gridContainer1');
     let container = document.querySelector('#gridContainer1');
@@ -82,8 +158,9 @@ const createGridTwo = () => {
 
 const newGame = () => {
     //make 2 player friendly
-    let board1 = createGridOne();
-    let board2 = createGridTwo();
+    //let board1 = createGridOne();
+    //let board2 = createGridTwo();
+    /*
     const firstGameboard = gameboard(1);
     const ship1 = firstGameboard.placeShip(['e1one', 'e2one', 'e3one'], message1);
     const ship2 = firstGameboard.placeShip(['a10one', 'b10one'], message1);
@@ -145,6 +222,8 @@ const newGame = () => {
             }
         }
     });
+    */
+    /*
     const secondGameboard = gameboard(2);
     const ship1two = secondGameboard.placeShip(['e1two', 'e2two', 'e3two'], message2);
     const ship2two = secondGameboard.placeShip(['a10two', 'b10two'], message2);
@@ -217,7 +296,7 @@ const newGame = () => {
         message2.textContent = "Already attacked"
     }
     }
-}
+}    */
     const finishGame = () => {
         if (grid1.classList.contains('scale')) {
             grid1.classList.remove('scale');
@@ -226,15 +305,15 @@ const newGame = () => {
             grid2.classList.remove('scale');
         }
     }
-    return {makePlay}
+    //return {makePlay}
 }
 
 let playButton = document.querySelector('#play');
 let playContainer = document.querySelector('#playButtonGrid');
 
 playButton.addEventListener('click', () => {
-    grid2.classList.add('scale');
+    //grid2.classList.add('scale');
     let stuff = newGame();
-    stuff.makePlay();
+    //stuff.makePlay();
     playContainer.innerHTML = '';
 });
