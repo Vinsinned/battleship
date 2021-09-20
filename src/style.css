@@ -45,13 +45,14 @@ button:Hover {
     height: 30px;
     border: 1px solid #C29D4E;
 }
+.test {
+    background-color: #C29D4E;
+}
 #buttons {
     display: flex;
     justify-content: space-around;
 }
 #gridContainer2 {
-    width: 300px;
-    height: 300px;
     margin: auto;
 }
 #submit1 {
@@ -98,8 +99,5 @@ button:Hover {
     margin-bottom: 30px;
 }
 .a1 {
-    width: 50px;
-    height: 50px;
-    border: 1px solid violet;
-    background-color: #E3DFD7;
+
 }

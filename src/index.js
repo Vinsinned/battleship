@@ -36,7 +36,8 @@ for (const ships of makeShips) {
     blockDiv.id = 'blockDiv';
     blockDiv.classList.add('a1')
     blockDiv.style.cssText = `position: absolute;
-    width: 30px; height: 30px;`
+    width: 30px; height: calc(30px * ${ships});display: flex;
+    flex-direction: column;`
     let i;
     for (i = 0; i < ships; i++) {
         let block = document.createElement('div');
@@ -82,6 +83,17 @@ function dragElement(elmnt) {
     // call a function whenever the cursor moves:
     document.onmousemove = elementDrag;
   }
+  const doElsCollide = function(el1, el2) {
+    el1.offsetBottom = el1.offsetTop + el1.offsetHeight;
+    el1.offsetRight = el1.offsetLeft + el1.offsetWidth;
+    el2.offsetBottom = el2.offsetTop + el2.offsetHeight;
+    el2.offsetRight = el2.offsetLeft + el2.offsetWidth;
+
+    return !((el1.offsetBottom < el2.offsetTop) ||
+             (el1.offsetTop > el2.offsetBottom) ||
+             (el1.offsetRight < el2.offsetLeft) ||
+             (el1.offsetLeft > el2.offsetRight))
+};
 
   function elementDrag(e) {
     e = e;
@@ -94,13 +106,22 @@ function dragElement(elmnt) {
     // set the element's new position:
     elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
     elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-  }
+}
 
-  function closeDragElement() {
-    // stop moving when mouse button is released:
-    document.onmouseup = null;
-    document.onmousemove = null;
-  }
+    function closeDragElement() {
+        let parent = elmnt.parentElement;
+        let position = elmnt.getBoundingClientRect();
+        elmnt.style.visibility = 'hidden';
+        let tile = document.elementFromPoint(position.left, position.top);
+        if (tile == null) {
+            elmnt.style.visibility = 'visible';
+        }
+        tile.classList.add('test');
+        //let this function know where to put other blocks (if applicable)
+        // stop moving when mouse button is released:
+        document.onmouseup = null;
+        document.onmousemove = null;
+    }
 }
 
 const createGridOne = () => {
@@ -120,12 +141,15 @@ const createGridOne = () => {
         allDivs.style.cssText = 'display: grid; grid-template-rows: repeat(${limit}, 1fr); grid-template-columns: repeat(10, 1fr);';
         container.appendChild(div);
         div.addEventListener('click', () => {
-        if (currentSelected1 != null) {
-            currentSelected1.style.cssText = '';
-        }
-        currentCoordinate1 = div.id;
-        currentSelected1 = document.querySelector(`#${div.id}`);
-        currentSelected1.style.cssText = 'transform: scale(1.1);';
+            let position = div.getBoundingClientRect();
+            console.log(position.top)
+            console.log(position.left)
+            if (currentSelected1 != null) {
+                currentSelected1.style.cssText = '';
+            }
+            currentCoordinate1 = div.id;
+            currentSelected1 = document.querySelector(`#${div.id}`);
+            currentSelected1.style.cssText = 'transform: scale(1.1);';
         })
     }
 }
@@ -158,7 +182,7 @@ const createGridTwo = () => {
 
 const newGame = () => {
     //make 2 player friendly
-    //let board1 = createGridOne();
+    let board1 = createGridOne();
     //let board2 = createGridTwo();
     /*
     const firstGameboard = gameboard(1);
@@ -311,9 +335,13 @@ const newGame = () => {
 let playButton = document.querySelector('#play');
 let playContainer = document.querySelector('#playButtonGrid');
 
+/*
 playButton.addEventListener('click', () => {
     //grid2.classList.add('scale');
     let stuff = newGame();
     //stuff.makePlay();
     playContainer.innerHTML = '';
 });
+*/
+
+newGame();
