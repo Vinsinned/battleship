@@ -110,13 +110,25 @@ function dragElement(elmnt) {
 
     function closeDragElement() {
         let parent = elmnt.parentElement;
-        let position = elmnt.getBoundingClientRect();
-        elmnt.style.visibility = 'hidden';
-        let tile = document.elementFromPoint(position.left, position.top);
-        if (tile == null) {
-            elmnt.style.visibility = 'visible';
+        let selectParent = parent.getElementsByTagName('*'); 
+        let i;
+        for (i = 0; i < selectParent.length; i++) {
+            let divHeader = selectParent[i];
+            if (divHeader.id !== 'blockDivHeader') {
+                continue;
+            }
+            let position = divHeader.getBoundingClientRect();
+            parent.style.visibility = 'hidden';
+            let tile = document.elementFromPoint(position.left, position.top);
+            if (tile.classList.contains('tiles') === false) {
+                tile = null;
+            }
+            if (tile == null) {
+                parent.style.visibility = 'visible';
+            } else {
+                tile.classList.add('test');
+            }
         }
-        tile.classList.add('test');
         //let this function know where to put other blocks (if applicable)
         // stop moving when mouse button is released:
         document.onmouseup = null;
